@@ -3,16 +3,13 @@ tasks:
   - name: probabilistic backpropagation
   - init: |
       git clone https://github.com/HIPS/Probabilistic-Backpropagation
+      # size_train must be integer, and print line should be compatible to python 3
     command: echo 'start script'
   - name: jupyter notebook
     init: |
-      # need to have installed the "openblas" library for fast numerical algebra operations
-      # brew install -vd openblas
-      # sudo apt-get install libopenblas-dev
-      # source ~/.bashrc
+      # compiling by c looks for .h file in /usr/lib but Ubuntu pyenv environment is not mathing the path  
       PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install -v --force 3.8.13
       pip install -r requirement.txt
-      # cd Probabilistic-Backpropagation/c/PBP_net; ./compile.sh
       jupyter notebook --generate-config
       echo -e '\nc.NotebookApp.contents_manager_class = "jupytext.TextFileContentsManager"' >> ~/.jupyter/jupyter_notebook_config.py
       echo -e '\nc.ContentsManager.default_jupytext_formats = "ipynb,py"' >> ~/.jupyter/jupyter_notebook_config.py

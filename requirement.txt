@@ -1,4 +1,4 @@
 jupytext
-numpy
+numpy==1.21
 theano
 Cython
