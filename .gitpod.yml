@@ -1,0 +1,24 @@
+# List the start up tasks. Learn more https://www.gitpod.io/docs/config-start-tasks/
+tasks:
+  - name: probabilistic backpropagation
+  - init: |
+      git clone https://github.com/HIPS/Probabilistic-Backpropagation
+    command: echo 'start script'
+  - name: jupyter notebook
+    init: |
+      # need to have installed the "openblas" library for fast numerical algebra operations
+      # brew install -vd openblas
+      sudo apt-get install libopenblas-dev
+      source ~/.bashrc
+      pip install -r requirement.txt
+      cd Probabilistic-Backpropagation/c/PBP_net; ./compile.sh
+      jupyter notebook --generate-config
+      echo -e '\nc.NotebookApp.contents_manager_class = "jupytext.TextFileContentsManager"' >> ~/.jupyter/jupyter_notebook_config.py
+      echo -e '\nc.ContentsManager.default_jupytext_formats = "ipynb,py"' >> ~/.jupyter/jupyter_notebook_config.py
+      jupyter notebook --ip=*
+    openMode: split-right
+
+# List the ports to expose. Learn more https://www.gitpod.io/docs/config-ports/
+ports:
+  - port: 3000
+    onOpen: open-preview
